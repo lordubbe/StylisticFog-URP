@@ -27,6 +27,7 @@
 
 	uniform float _FogEndDistance;
 
+	uniform float4 _FogColor;
 	uniform float _Height;
 	uniform float _BaseDensity;
 	uniform float _DensityFalloff;
@@ -99,8 +100,9 @@
 		// clamp the scene color to at most 1. to avoid HDR rendering to change lumiance in final image.
 		half4 sceneColor = min(1., tex2D(_MainTex, uv));
 		half4 blended = lerp(sceneColor, half4(fogColor.xyz, 1.), fogColor.a * step(FOG_AMOUNT_CONTRIBUTION_THREASHOLD, fogAmount));
-		blended.a = 1.;
-		return blended;
+		// blended.a = 1.;
+		blended.a = sceneColor.a;
+		return blended; 
 	}
 
 	half4 fragment_distance(v2f_multitex i) : SV_Target
@@ -139,7 +141,7 @@
 
 		half4 fogColor = GetColorFromTexture(_FogColorTexture0, heightFogAmount);
 
-		return BlendFogToScene(i.uv0, fogColor, fogColor.a);
+		return BlendFogToScene(i.uv0, fogColor * _FogColor, fogColor.a);
 	}
 
 	half4 fragment_distance_height_shared_color(v2f_multitex i) : SV_Target

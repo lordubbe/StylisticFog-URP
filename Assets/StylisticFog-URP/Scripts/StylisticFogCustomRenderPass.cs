@@ -226,6 +226,7 @@ namespace Demonixis.Toolbox.Rendering
 
         private void SetHeightFogUniforms()
         {
+            Material.SetColor("_FogColor", heightFog.color);
             Material.SetFloat("_Height", heightFog.baseHeight);
             Material.SetFloat("_BaseDensity", heightFog.baseDensity);
             Material.SetFloat("_DensityFalloff", heightFog.densityFalloff);

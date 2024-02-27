@@ -92,6 +92,9 @@ namespace Demonixis.Toolbox.Rendering
     [Serializable]
     public struct HeightFogSettings
     {
+        [ColorUsage(true, true)]
+        public Color color; 
+
         [Tooltip("Wheter or not to apply height based fog.")]
         public bool enabled;
 
